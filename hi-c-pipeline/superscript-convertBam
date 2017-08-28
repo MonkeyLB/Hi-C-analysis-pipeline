@@ -1,0 +1,7 @@
+#!/bin/bash
+
+for x in *.sam
+do
+	echo	$x
+	samtools view -bS -o $x.bam $x
+done

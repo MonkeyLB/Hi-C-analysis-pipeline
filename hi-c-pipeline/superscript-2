@@ -1,0 +1,15 @@
+#!/bin/bash
+
+if [ $# -ne 1 ]
+then
+  echo "$0 *sam"
+  exit 0
+fi
+
+./sam_uniq_reads.pl $1
+samtools view -bS -o $1.uniq.bam $1.uniq
+samtools sort $1.uniq.bam $1.uniq.bam.sorted
+
+java -Xmx6g -jar /mnt/thumper/home/ghon/mysoftware/picard-tools-1.43/MarkDuplicates.jar INPUT=$1.unique.sorted.bam OUTPUT=$1.nodup.bam METRICS_FILE=metrics.lane7.txt ASSUME_SORTED=true REMOVE_DUPLICATES=true VALIDATION_STRINGENCY=LENIENT
+
+#NOW we have monoclonal reads in $1.nodup.bam

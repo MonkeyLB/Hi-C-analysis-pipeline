@@ -1,0 +1,19 @@
+#!/bin/tcsh
+
+set BWA = /mnt/thumper/home/jdixon/software/bwa-0.5.9/bwa
+#set FASTA = /mnt/thumper/home/jdixon/database/human/hg18.fa
+set FASTA = /mnt/thumper/home/jdixon/database/mouse/mm9.fa
+#need to change this
+set DIR = /mnt/thumper/solexa/runs/individual_runs/2011_05_03_HiSeq_PE_flowcell-B/fastq_files
+#set DIR = /mnt/thumper/solexa/runs/individual_runs/2011_02_10_HiSeq_PE_flowcell-B/fastq_files/
+
+# This is to map the reads using bwa, also, in this version, the FASTA genome file is set to human,
+# The alternative is /mnt/thumper/home/jdixon/database/mouse/mm9.fa 
+
+echo "Mapping Read 1 now" >> mapping_master_log_file
+($BWA aln $FASTA $DIR/lane2_read1.fastq > lane2_read1.aln.sai) >&! mapping_log_file
+#1 processor memory usage???
+echo "Mapping Read 2 now" >> mapping_master_log_file
+($BWA aln $FASTA $DIR/lane2_read2.fastq > lane2_read2.aln.sai) >&! mapping_log_file
+echo "Running Sampe now" >> mapping_master_log_file
+($BWA sampe $FASTA lane2_read1.aln.sai lane2_read2.aln.sai $DIR/lane2_read1.fastq $DIR/lane2_read2.fastq > lane2.sam) >&! mapping_log_file

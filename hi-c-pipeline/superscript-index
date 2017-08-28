@@ -1,0 +1,7 @@
+#!/bin/bash
+
+for x in cortex-r*-t*bam
+do
+	echo $x
+	samtools index $x
+done

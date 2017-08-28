@@ -1,0 +1,11 @@
+#!/bin/bash
+
+#for y in chr1 chr2 chr3 chr4 chr5 chr6 chr7 chr8 chr9 chr10 chr11 chr12 chr13 chr14 chr15 chr16 chr17 chr18 chr19 chrX
+for y in chr7 chr8
+do
+	for x in 1000000
+	do
+	echo $y $x >> log1.txt
+		./get_matrix.pl cortex-3lane-r2.nodup.bam $x $y mm9.fa.fai > new-cortex-matrix/r2.$y.$x.matrix
+	done
+done

@@ -1,0 +1,32 @@
+1. merged to bam
+
+java -Xmx6g -jar /mnt/thumper/home/ghon/mysoftware/picard-tools-1.43/MergeSamFiles.jar INPUT=lane2.sam.unique INPUT=cortex_R2.sam.unique OUTPUT=cortex.merged.bam VALIDATION_STRINGENCY=LENIENT
+
+2. sort
+
+samtools sort cortex.merged.bam cortex.merged.bam.sorted
+
+3. remove dups
+
+java -Xmx6g -jar /mnt/thumper/home/ghon/mysoftware/picard-tools-1.43/MarkDuplicates.jar INPUT=cortex.merged.bam.sorted.bam OUTPUT=cortex.nodup.bam METRICS_FILE=metrics.cortex.txt ASSUME_SORTED=true REMOVE_DUPLICATES=true VALIDATION_STRINGENCY=LENIENT
+
+4. index
+samtools index cortex.nodup.bam
+
+5. move it to ../cortex to do further analysis
+
+
+
+on 12-15-2011 to submit data: I moved all the individual bam files to /mnt/thumper/home/yuefeng/mouse/uniq/Hi-c/submission
+
+5.0G	cortex-r2-t1-0617L1.bam
+5.1G	cortex-r2-t2-0725L1.bam
+5.0G	cortex-r2-t3-0725L2.bam
+16G	total
+-bash-3.2$ du cortex-r1-t*bam
+4.0G	cortex-r1-t1-0503L2.bam
+3.6G	cortex-r1-t2-0509L2.bam
+3.9G	cortex-r1-t3-0520L6.bam
+3.8G	cortex-r1-t4-0520L7.bam
+5.8G	cortex-r1-t5-0617L5.bam
+5.8G	cortex-r1-t6-0617L6.bam

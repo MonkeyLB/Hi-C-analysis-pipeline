@@ -1,0 +1,24 @@
+#!/bin/bash
+
+if [ $# -ne 3 ]
+then
+  echo "$0 pair-read1.fastq pair-read2.fastq outputname"
+  exit 0
+fi
+
+
+BWA="/mnt/thumper/home/jdixon/software/bwa-0.5.9/bwa"
+#set FASTA = /mnt/thumper/home/jdixon/database/human/hg18.fa
+FASTA="/mnt/thumper/home/jdixon/database/mouse/mm9/mm9.fa"
+#need to change this
+#set DIR = /mnt/thumper/solexa/runs/individual_runs/2011_02_10_HiSeq_PE_flowcell-B/fastq_files/
+
+# This is to map the reads using bwa, also, in this version, the FASTA genome file is set to human,
+# The alternative is /mnt/thumper/home/jdixon/database/mouse/mm9.fa 
+
+echo "Mapping Read 1 now" >> $3_mapping_master_log_file
+$BWA aln -t 4 $FASTA $1 > $3.read1.aln.sai 2>$3_mapping_log_file
+echo "Mapping Read 2 now" >> $3_mapping_master_log_file
+$BWA aln -t 4 $FASTA $2 > $3.read2.aln.sai 2>$3_mapping_log_file
+echo "Running Sampe now" >> $3_mapping_master_log_file
+$BWA sampe $FASTA $3.read1.aln.sai $3.read2.aln.sai $1 $2 > $3.sam 2>$3_mapping_log_file
