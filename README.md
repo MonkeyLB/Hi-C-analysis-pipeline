@@ -2,7 +2,7 @@
 
 #!/bin/tcsh
 
-[//]: ### need to fix hotspot_to_bedfile.pl, it will replace the whatever bed file with the same chr
+[comment]: ### need to fix hotspot_to_bedfile.pl, it will replace the whatever bed file with the same chr
 
 set BWA = /mnt/thumper/home/jdixon/software/bwa-0.5.9/bwa
 set FASTA = /mnt/thumper/home/jdixon/database/human/hg18.fa
